@@ -8,16 +8,16 @@ A machine learning pipeline that predicts whether U.S. home prices will be highe
 
 After running the model, six charts are saved to `outputs/`:
 
-| Chart | What it shows |
-|-------|--------------|
-| `predictions_scatter.png` | Inflation-adjusted prices over time, colored green (correct) or red (wrong) |
-| `rolling_accuracy.png` | Per-fold accuracy across the backtest timeline for both models |
-| `cumulative_return.png` | Simulated return of following each model's signal vs baselines |
-| `shap_random_forest.png` | SHAP beeswarm for Random Forest: direction and magnitude of each feature's impact |
-| `shap_xgboost.png` | SHAP beeswarm for XGBoost: direction and magnitude of each feature's impact |
-| `correlation_heatmap.png` | Predictor correlation matrix |
+| Chart                     | What it shows                                                                     |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| `predictions_scatter.png` | Inflation-adjusted prices over time, colored green (correct) or red (wrong)       |
+| `rolling_accuracy.png`    | Per-fold accuracy across the backtest timeline for both models                    |
+| `cumulative_return.png`   | Simulated return of following each model's signal vs baselines                    |
+| `shap_random_forest.png`  | SHAP beeswarm for Random Forest: direction and magnitude of each feature's impact |
+| `shap_xgboost.png`        | SHAP beeswarm for XGBoost: direction and magnitude of each feature's impact       |
+| `correlation_heatmap.png` | Predictor correlation matrix                                                      |
 
-*Run the model locally to generate these plots (see How to Run It below).*
+_Run the model locally to generate these plots (see How to Run It below)._
 
 ![Prediction Scatter](outputs/predictions_scatter.png)
 ![Rolling Accuracy](outputs/rolling_accuracy.png)
@@ -60,16 +60,16 @@ SHAP values are computed by running the final fold's trained model over the enti
 
 ## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| Python 3.10+ | Core language |
-| pandas | Data loading, merging, and all time-series manipulation |
-| NumPy | Array operations |
-| scikit-learn | Random Forest, accuracy/F1/MCC metrics, classification report |
-| XGBoost | Gradient-boosted tree model for comparison |
-| SHAP | Model explainability (beeswarm summary plot) |
-| seaborn + matplotlib | All visualizations |
-| pytest | Unit tests for feature engineering and pipeline |
+| Tool                 | Purpose                                                       |
+| -------------------- | ------------------------------------------------------------- |
+| Python 3.10+         | Core language                                                 |
+| pandas               | Data loading, merging, and all time-series manipulation       |
+| NumPy                | Array operations                                              |
+| scikit-learn         | Random Forest, accuracy/F1/MCC metrics, classification report |
+| XGBoost              | Gradient-boosted tree model for comparison                    |
+| SHAP                 | Model explainability (beeswarm summary plot)                  |
+| seaborn + matplotlib | All visualizations                                            |
+| pytest               | Unit tests for feature engineering and pipeline               |
 
 ---
 
@@ -120,16 +120,16 @@ None required. All data is loaded from local CSV files.
 
 Download these and place them in the project root. They are not committed to the repo due to file size.
 
-| File | Source | Description |
-|------|--------|-------------|
-| `MORTGAGE30US.csv` | FRED | 30-year fixed mortgage rate, weekly |
-| `RRVRUSQ156N.csv` | FRED | Rental vacancy rate, quarterly |
-| `CPIAUCSL.csv` | FRED | Consumer Price Index, monthly |
-| `UNRATE.csv` | FRED | U.S. unemployment rate, monthly |
-| `Metro_median_sale_price_uc_sfrcondo_sm_week.csv` | Zillow Research | National median sale price, weekly |
+| File                                              | Source          | Description                             |
+| ------------------------------------------------- | --------------- | --------------------------------------- |
+| `MORTGAGE30US.csv`                                | FRED            | 30-year fixed mortgage rate, weekly     |
+| `RRVRUSQ156N.csv`                                 | FRED            | Rental vacancy rate, quarterly          |
+| `CPIAUCSL.csv`                                    | FRED            | Consumer Price Index, monthly           |
+| `UNRATE.csv`                                      | FRED            | U.S. unemployment rate, monthly         |
+| `Metro_median_sale_price_uc_sfrcondo_sm_week.csv` | Zillow Research | National median sale price, weekly      |
 | `Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_month.csv` | Zillow Research | Home Value Index (middle tier), monthly |
-| `Metro_zori_uc_sfrcondomfr_sm_sa_month.csv` | Zillow Research | Observed Rent Index, monthly |
-| `Metro_invt_fs_uc_sfrcondo_sm_month.csv` | Zillow Research | Active for-sale listings, monthly |
+| `Metro_zori_uc_sfrcondomfr_sm_sa_month.csv`       | Zillow Research | Observed Rent Index, monthly            |
+| `Metro_invt_fs_uc_sfrcondo_sm_month.csv`          | Zillow Research | Active for-sale listings, monthly       |
 
 FRED data: [fred.stlouisfed.org](https://fred.stlouisfed.org)
 Zillow data: [zillow.com/research/data](https://www.zillow.com/research/data/)
@@ -174,13 +174,14 @@ Housing Model/
 
 **Metrics (backtest, national aggregate):**
 
-| Model | Accuracy | F1 (Up) | MCC | Precision | Recall |
-|-------|----------|---------|-----|-----------|--------|
-| Random Forest (tuned) | 77.62% | 0.713 | 0.530 | 0.717 | 0.709 |
-| XGBoost (tuned) | 73.92% | 0.644 | 0.443 | 0.692 | 0.602 |
-| Ensemble (RF + XGB) | 74.38% | 0.658 | 0.455 | 0.690 | 0.630 |
+| Model                 | Accuracy | F1 (Up) | MCC   | Precision | Recall |
+| --------------------- | -------- | ------- | ----- | --------- | ------ |
+| Random Forest (tuned) | 77.62%   | 0.713   | 0.530 | 0.717     | 0.709  |
+| XGBoost (tuned)       | 73.92%   | 0.644   | 0.443 | 0.692     | 0.602  |
+| Ensemble (RF + XGB)   | 74.38%   | 0.658   | 0.455 | 0.690     | 0.630  |
 
 **Known limitations:**
+
 - All data is national aggregate. The model says nothing about individual metros, neighborhoods, or property types.
 - The training period spans a prolonged bull market (2012-2021) followed by a rate shock (2022-2023). Performance during future regimes not represented in training is unknown.
 - The binary target loses information about the magnitude of price changes. A prediction of "up" could mean +0.1% or +5%.
@@ -190,4 +191,4 @@ Housing Model/
 
 ## Built by
 
-Viet
+Viet Tran
