@@ -1,4 +1,4 @@
-# Housing Price Direction Model
+# U.S. Housing Market Predictor
 
 A machine learning pipeline that predicts whether U.S. home prices will be higher or lower 13 weeks from now, using macroeconomic and housing market data from FRED and Zillow.
 
