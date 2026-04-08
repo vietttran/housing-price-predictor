@@ -48,7 +48,7 @@ SHAP values are computed by running the final fold's trained model over the enti
 - Hyperparameter tuning via TimeSeriesSplit grid search optimising MCC
 - Random Forest, XGBoost, and a soft-voting ensemble trained and compared side-by-side
 - Full evaluation suite: accuracy, F1, MCC, precision, recall, confusion matrix
-- 24 engineered features: macro indicators, lags, year-over-year changes, momentum, mean-reversion, rate velocity, seasonality
+- 24 engineered features: macro indicators, lags, year-over-year changes, momentum, mean-reversion, rate velocity, seasonality — adding 8 momentum/seasonality features lifted accuracy from 57.87% to 77.62% (+19.75 pp) and MCC from 0.064 to 0.530
 - SHAP beeswarm plots for both models showing feature direction and magnitude
 - Rolling per-fold accuracy chart to detect regime-specific performance
 - Simulated cumulative return chart vs always-long and random baselines
@@ -172,7 +172,15 @@ Housing Model/
 
 **Evaluation method:** Walk-forward (expanding-window) backtest. The first training window is 260 rows (~5 years). Each subsequent fold advances by 52 rows (1 year). No future data is ever present in any training window. Hyperparameters are tuned once on the initial training window using TimeSeriesSplit (3 splits) optimising Matthews Correlation Coefficient, then held fixed across all backtest folds.
 
-**Metrics (backtest, national aggregate):**
+**Feature engineering impact:**
+
+| Feature Set                        | Accuracy | F1 (Up) | MCC   |
+| ---------------------------------- | -------- | ------- | ----- |
+| 16 base features (lags, YoY only)  | 57.87%   | 0.358   | 0.064 |
+| 24 features (+momentum, seasonality, rate velocity) | **77.62%** | **0.713** | **0.530** |
+| **Improvement**                    | **+19.75 pp** | **+0.355** | **+0.466** |
+
+**Final model metrics (backtest, national aggregate):**
 
 | Model                 | Accuracy | F1 (Up) | MCC   | Precision | Recall |
 | --------------------- | -------- | ------- | ----- | --------- | ------ |
